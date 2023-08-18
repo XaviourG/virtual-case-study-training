@@ -15,7 +15,10 @@ function App() {
             paddingRight: '6rem',
           }}>Start</p>
         </button>
-        <button onClick={() => speechEngine.start()}>rec</button>
+        <button onClick={() => {
+          speechEngine.start();
+          speechEngine.autoStop().then((text) => console.log(`AUTO:\n${text}`))
+        }}>rec</button>
         <button onClick={() => console.log(speechEngine.stop())}>stop</button>
       </div>
       <p className="read-the-docs">
