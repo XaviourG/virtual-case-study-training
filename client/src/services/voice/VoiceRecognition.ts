@@ -45,7 +45,7 @@ class VoiceRecognition {
     });
 
     while (active) {
-      if (events > 1 && clock >= 3) {
+      if (events > 1 && clock >= 2) {
         console.log(`clock out ${clock}`);
         active = false;
       }
