@@ -26,7 +26,7 @@ class TrainingServiceLoop {
     const answer = 'This is a fake anwser I\'m pretending to load from chat g p t';
 
     this.SetState(EventState.listen);
-    this.Speech.speak(answer);
+    await this.Speech.speak(answer);
 
     this.SetState(EventState.done);
   }

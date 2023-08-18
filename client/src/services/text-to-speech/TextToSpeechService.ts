@@ -5,9 +5,12 @@ class TextToSpeechService {
 
   protected speechEngine: SpeechSynthesis;
 
-  speak = (text: string): void => {
+  speak = async (text: string): Promise<SpeechSynthesisEvent> => {
     const utterence = new SpeechSynthesisUtterance(text);
     this.speechEngine.speak(utterence);
+    return new Promise(resolve => {
+      utterence.onend = resolve;
+    });
   }
 
 }
