@@ -2,11 +2,13 @@ const colours = {
   gradients: {
     green: {
       start: '#00EDB4',
-      end: '#2CDC10',
+      middle: '#2CDC10',
+      end: '#00EDB4',
     },
     purple: {
       start: '#00FFFF',
-      end: '#FA00FF',
+      middle: '#FA00FF',
+      end: '#00FFFF',
     },
     red: {
       start: '#FF007A',

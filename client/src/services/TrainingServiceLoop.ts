@@ -14,6 +14,7 @@ class TrainingServiceLoop {
       { role: 'system', content: GPT_SETUP },
     ];
     this.attitude = 30;
+    this.active = true;
   }
 
   protected Voice: VoiceRecognition;
@@ -26,10 +27,12 @@ class TrainingServiceLoop {
 
   attitude: number;
 
+  active: boolean;
+
   protected SetState: (state: EventState) => void;
 
   run = async () => {
-    while (true) {
+    while (this.active) {
       this.SetState(EventState.speak);
       this.Voice.start();
       const question = await this.Voice.autoStop();
@@ -52,6 +55,10 @@ class TrainingServiceLoop {
 
       this.SetState(EventState.done);
     }
+  }
+
+  kill = () => {
+    this.active = false;
   }
 }
 
