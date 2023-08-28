@@ -15,10 +15,9 @@ const StateDisplay = ({
   return (
     <div>
       <p style={{
-        color: isError() ? colours.gradients.red.end : colours.neutral.dark,
+        color: isError() ? colours.gradients.red.end : colours.neutral.mid,
         padding: '0.5rem',
         border: `1px solid ${isError() ? colours.gradients.red.end : colours.neutral.mid}`,
-        backgroundColor: colours.neutral.light,
         borderRadius: '20px',
       }}>
         {EventState[state]}
