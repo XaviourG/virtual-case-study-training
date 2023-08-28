@@ -4,6 +4,7 @@ enum EventState {
   loadingAnwser = 2,
   listen = 3,
   done = 10,
+  error = -1,
 }
 
 export default EventState;

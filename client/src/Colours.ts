@@ -17,9 +17,9 @@ const colours = {
     },
   },
   neutral: {
-    light: '',
-    mid: '',
-    dark: '',
+    light: '#e0e0e0',
+    mid: '#a8a7a7',
+    dark: '#454444',
   },
   background: {
     dark: '#000000',

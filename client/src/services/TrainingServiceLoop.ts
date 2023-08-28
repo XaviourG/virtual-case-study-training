@@ -47,17 +47,19 @@ class TrainingServiceLoop {
         content: question,
       });
       this.SetState(EventState.loadingAnwser);
-      const answer = await this.GPT.ask(this.ChatHistory);
-      this.ChatHistory.push({
-        role: 'assistant',
-        content: [answer.message, answer.attitude].join('|||'),
-      });
-      this.SetAttitude(answer.attitude);
-
-      this.SetState(EventState.listen);
-      await this.Speech.speak(answer.message);
-
-      this.SetState(EventState.done);
+      try {
+        const answer = await this.GPT.ask(this.ChatHistory);
+        this.ChatHistory.push({
+          role: 'assistant',
+          content: [answer.message, answer.attitude].join('|||'),
+        });
+        this.SetAttitude(answer.attitude);
+        this.SetState(EventState.listen);
+        await this.Speech.speak(answer.message);
+      } catch (e) {
+          this.SetState(EventState.error);
+          this.kill();
+      }
     }
   }
 

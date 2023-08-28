@@ -3,6 +3,7 @@ import AttitudeIndicator from "../components/AttitudeIndicator";
 import EventState from "../dtos/EventState";
 import TrainingServiceLoop from "../services/TrainingServiceLoop";
 import colours from "../Colours";
+import StateDisplay from "../components/StateDisplay";
 
 const TrainingInterface = (): ReactElement => {
   const [state, setState] = useState<EventState>(EventState.start);
@@ -20,7 +21,7 @@ const TrainingInterface = (): ReactElement => {
     } else if (speak) {
       setSpeak(false);
     }
-  }, [state])
+  }, [state]);
 
   if (state === EventState.start) {
     return (
@@ -58,17 +59,35 @@ const TrainingInterface = (): ReactElement => {
   return (
     <div style={{
       display: 'flex',
+      flexDirection: 'column',
       justifyContent: 'center',
+      alignItems: 'center',
       width: '100%'
     }}>
-      <div style={{ paddingTop: '33vh' }}>
+      <div style={{
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'end',
+      }}>
+        <p style={{ color: colours.neutral.mid }}>{attitude}</p>
+      </div>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        paddingTop: '20vh',
+      }}>
         <AttitudeIndicator
           attitude={attitude}
           speak={speak}
         />
-        <p>{EventState[state]}</p>
-        <p>{attitude}</p>
       </div>
+      <div style={{
+        paddingTop: '10vh',
+        width: '15rem',
+      }}>
+          <StateDisplay state={state}/>
+        </div>
     </div>
   );
 };
