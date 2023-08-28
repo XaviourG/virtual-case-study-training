@@ -6,6 +6,11 @@ export interface GptMessage {
   content: string,
 }
 
+export interface GptResponse {
+  message: string,
+  attitude: number,
+}
+
 class GptAgent {
   constructor () {
     const config = {
@@ -22,14 +27,23 @@ class GptAgent {
 
   // protected conversation: OpenAI.Chat;
 
-  ask = async (messageList: GptMessage[]): Promise<string> => {
+  ask = async (messageList: GptMessage[]): Promise<GptResponse> => {
     const request: OpenAI.Chat.Completions.CompletionCreateParamsNonStreaming = {
       model: 'gpt-3.5-turbo',
       messages: messageList,
     }
-
+    console.log(request);
     const res = await this.agent.chat.completions.create(request);
-    return res.choices[0].message.content as string;
+    const textResponse = res.choices[0].message.content as string;
+
+    const bits = textResponse.split('|||');
+
+    const output = {
+      message: bits[0],
+      attitude: parseInt(bits[1], 10),
+    }
+  
+    return output;
   } 
 }
 

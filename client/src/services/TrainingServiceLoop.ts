@@ -13,6 +13,7 @@ class TrainingServiceLoop {
     this.ChatHistory = [
       { role: 'system', content: GPT_SETUP },
     ];
+    this.attitude = 30;
   }
 
   protected Voice: VoiceRecognition;
@@ -22,6 +23,8 @@ class TrainingServiceLoop {
   protected GPT: GptAgent;
 
   protected ChatHistory: GptMessage[];
+
+  attitude: number;
 
   protected SetState: (state: EventState) => void;
 
@@ -40,11 +43,12 @@ class TrainingServiceLoop {
       const answer = await this.GPT.ask(this.ChatHistory);
       this.ChatHistory.push({
         role: 'assistant',
-        content: answer,
+        content: [answer.message, answer.attitude].join('|||'),
       });
+      this.attitude = answer.attitude;
 
       this.SetState(EventState.listen);
-      await this.Speech.speak(answer);
+      await this.Speech.speak(answer.message);
 
       this.SetState(EventState.done);
     }

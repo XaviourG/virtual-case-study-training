@@ -25,6 +25,7 @@ function App() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh'}}>
       <p style={{ fontSize: '2rem' }}>{EventState[state]}</p>
+      <p style={{ fontSize: '4rem' }}>{trainingService.attitude}</p>
     </div>
   )
 }
