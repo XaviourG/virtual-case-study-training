@@ -5,15 +5,19 @@ import TextToSpeechService from "./text-to-speech/TextToSpeechService";
 import VoiceRecognition, { IWindow } from "./voice/VoiceRecognition";
 
 class TrainingServiceLoop {
-  constructor (window: Window, setState: (state: EventState) => void) {
+  constructor (
+    window: Window,
+    setState: (state: EventState) => void,
+    setAttitude: (attitude: number) => void,
+  ) {
     this.Voice = new VoiceRecognition(window as unknown as IWindow);
     this.Speech = new TextToSpeechService(window);
     this.GPT = new GptAgent();
     this.SetState = setState;
+    this.SetAttitude = setAttitude;
     this.ChatHistory = [
       { role: 'system', content: GPT_SETUP },
     ];
-    this.attitude = 30;
     this.active = true;
   }
 
@@ -25,11 +29,11 @@ class TrainingServiceLoop {
 
   protected ChatHistory: GptMessage[];
 
-  attitude: number;
-
   active: boolean;
 
   protected SetState: (state: EventState) => void;
+
+  protected SetAttitude: (attitude: number) => void;
 
   run = async () => {
     while (this.active) {
@@ -48,7 +52,7 @@ class TrainingServiceLoop {
         role: 'assistant',
         content: [answer.message, answer.attitude].join('|||'),
       });
-      this.attitude = answer.attitude;
+      this.SetAttitude(answer.attitude);
 
       this.SetState(EventState.listen);
       await this.Speech.speak(answer.message);

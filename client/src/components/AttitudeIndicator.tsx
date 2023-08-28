@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import colours from "../Colours";
-import MicOffIcon from "../assets/MicOnIcon";
+import MicOffIcon from "../assets/MicOffIcon";
 import MicOnIcon from "../assets/MicOnIcon";
 
 interface props {
